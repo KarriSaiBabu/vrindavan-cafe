@@ -3,6 +3,8 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "nodeVersion": "18.x",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
   "build": {
     "env": {
       "VITE_GEMINI_API_KEY": "AIzaSyAzgPQhEgfHQcj98oK15mic-YQU3BsRnNw"
