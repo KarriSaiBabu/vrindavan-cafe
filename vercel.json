@@ -1,6 +1,11 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "build": {
+    "env": {
+      "VITE_GEMINI_API_KEY": "AIzaSyAzgPQhEgfHQcj98oK15mic-YQU3BsRnNw"
+    }
+  },
   "env": {
     "VITE_GEMINI_API_KEY": "AIzaSyAzgPQhEgfHQcj98oK15mic-YQU3BsRnNw"
   }
