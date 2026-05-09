@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Send, Bot, User, Sparkles, Wand2 } from 'lucide-react';
-import genAI from '../gemini';
+import { getGenAI } from '../gemini';
 import { MENU_ITEMS } from '../constants';
 
 export function Chatbot() {
@@ -39,6 +39,7 @@ export function Chatbot() {
       
       User says: "${userMessage}"`;
 
+      const genAI = await getGenAI();
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent(prompt);
       const response = await result.response;
