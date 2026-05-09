@@ -91,6 +91,16 @@ export function Footer() {
             <Link to="/terms" className="hover:text-gold transition-colors">Engagement Terms</Link>
           </div>
         </div>
+
+        {/* Developer Section */}
+        <div className="border-t border-white/5 pt-8 mt-8 text-center">
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-2">
+            Developed by Sai Babu Karri
+          </p>
+          <p className="text-[10px] font-bold text-gold">
+            Contact: 9347567746
+          </p>
+        </div>
       </div>
     </footer>
   );

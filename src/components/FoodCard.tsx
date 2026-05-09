@@ -22,6 +22,10 @@ export const FoodCard: React.FC<{ item: FoodItem }> = ({ item }) => {
           alt={item.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/images/default-food.svg';
+          }}
         />
         <div className="absolute top-4 right-4 glass-dark px-3 py-1 rounded-full flex items-center gap-1 shadow-xl">
           <Star className="text-gold fill-gold" size={12} />
