@@ -70,7 +70,7 @@ export function Home() {
               <div className="relative w-full aspect-square max-w-[550px] mx-auto">
                 <div className="absolute inset-0 bg-gold/10 rounded-[100px] blur-3xl transform rotate-12" />
                 <img 
-                  src="https://res.cloudinary.com/roundglass/image/upload/v1753187552/rg/collective/media/rg-food-in-upma-mla-pesarattu-rakesh-raghunathan-may2022-001-16x9-1753187551759.jpg" 
+                  src="/images/pesarattu.jpg" 
                   alt="MLA Pesarattu"
                   className="w-full h-full object-cover rounded-[100px] shadow-2xl relative z-10 border border-white/10"
                   referrerPolicy="no-referrer"

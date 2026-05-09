@@ -46,7 +46,7 @@ export function Auth() {
         {/* Left Side - Visual */}
         <div className="relative hidden lg:block overflow-hidden">
           <img 
-            src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&q=80&w=1000" 
+            src="/images/meals.jpg" 
             alt="Andhra Veg Meals"
             className="w-full h-full object-cover opacity-40"
             referrerPolicy="no-referrer"

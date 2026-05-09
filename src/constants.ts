@@ -16,7 +16,7 @@ export const MENU_ITEMS: FoodItem[] = [
     description: 'Crispy rice crepe spiced with traditional red chili chutney and topped with pure cow ghee.',
     price: 95,
     category: 'Tiffins',
-    image: 'https://images.unsplash.com/photo-1605475011226-f55a79aee357?auto=format&fit=crop&q=80&w=1000',
+    image: '/images/dosa.jpg',
     rating: 4.8,
     isRecommended: true
   },
@@ -26,7 +26,7 @@ export const MENU_ITEMS: FoodItem[] = [
     description: 'Green gram crepe stuffed with Ginger Upma, served with Ginger Chutney. A royal Andhra breakfast.',
     price: 110,
     category: 'Tiffins',
-    image: 'https://res.cloudinary.com/roundglass/image/upload/v1753187552/rg/collective/media/rg-food-in-upma-mla-pesarattu-rakesh-raghunathan-may2022-001-16x9-1753187551759.jpg',
+    image: '/images/pesarattu.jpg',
     rating: 4.9,
     isOffer: true,
     offerText: 'Specialty'
@@ -37,7 +37,7 @@ export const MENU_ITEMS: FoodItem[] = [
     description: 'Soft, steamed fermented rice and lentil cakes. Served with Sambar and 3 types of chutneys.',
     price: 60,
     category: 'Tiffins',
-    image: '/images/idli.svg',
+    image: '/images/idli.jpg',
     rating: 4.5
   },
   // Lunch
@@ -47,7 +47,7 @@ export const MENU_ITEMS: FoodItem[] = [
     description: 'Complete platter with Rice, Pappu, Sambar, Rasam, Curds, Podi, Ghee, sweets, and various curries.',
     price: 180,
     category: 'Lunch',
-    image: 'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&q=80&w=1000',
+    image: '/images/meals.jpg',
     rating: 4.7,
     isRecommended: true
   },
@@ -75,7 +75,7 @@ export const MENU_ITEMS: FoodItem[] = [
     description: 'Long grain basmati rice cooked with succulent chicken pieces and secret Andhra spices in Dum style.',
     price: 280,
     category: 'Lunch',
-    image: 'https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&q=80&w=1000',
+    image: '/images/biryani.jpg',
     rating: 4.8,
     isOffer: true,
     offerText: 'Best Seller'

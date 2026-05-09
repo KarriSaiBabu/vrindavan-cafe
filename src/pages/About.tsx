@@ -9,7 +9,7 @@ export function About() {
       <section className="h-[70vh] relative flex items-center justify-center text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&q=80&w=1000" 
+            src="/images/meals.jpg" 
             alt="Andhra Veg Meals"
             className="w-full h-full object-cover opacity-30"
             referrerPolicy="no-referrer"
@@ -51,7 +51,7 @@ export function About() {
            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <div className="relative">
                  <div className="absolute -inset-4 bg-gold/10 blur-3xl rounded-full" />
-                 <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&q=80&w=1000" alt="Kitchen" className="rounded-[40px] shadow-2xl relative z-10 border border-white/10" referrerPolicy="no-referrer" />
+                 <img src="/images/biryani.jpg" alt="Kitchen" className="rounded-[40px] shadow-2xl relative z-10 border border-white/10" referrerPolicy="no-referrer" />
                  <div className="absolute -bottom-10 -right-10 glass-dark p-8 rounded-[32px] shadow-2xl max-w-xs md:block hidden z-20 border-white/10 animate-bounce-slow">
                     <Heart className="text-accent-red mb-4" size={32} />
                     <p className="font-serif font-bold text-xl text-gold mb-2">Passion for Spice</p>
