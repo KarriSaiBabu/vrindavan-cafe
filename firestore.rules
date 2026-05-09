@@ -1,0 +1,123 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 3. Path Variable Hardening (Helpers)
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function incoming() {
+      return request.resource.data;
+    }
+    
+    function existing() {
+      return resource.data;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      // Check if user has admin role in users collection
+      return isSignedIn() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // 2. Validation Blueprints
+    function isValidFoodItem(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.description is string && data.description.size() < 1000 &&
+             data.price is number && data.price > 0 &&
+             data.category in ['Tiffins', 'Lunch', 'Dinner', 'Cool Drinks', 'Juices'] &&
+             data.image is string && data.image.size() < 2000 &&
+             (!('rating' in data) || (data.rating is number && data.rating >= 0 && data.rating <= 5));
+    }
+
+    function isValidProfile(data) {
+      return data.uid == request.auth.uid &&
+             data.email == request.auth.token.email &&
+             data.role in ['user', 'admin'] &&
+             (!('displayName' in data) || (data.displayName is string && data.displayName.size() < 100)) &&
+             (!('phoneNumber' in data) || (data.phoneNumber is string && data.phoneNumber.size() < 20));
+    }
+
+    function isValidOrder(data) {
+      return data.userId == request.auth.uid &&
+             data.items is list && data.items.size() > 0 && data.items.size() <= 50 &&
+             data.total is number && data.total >= 0 &&
+             data.status in ['pending', 'preparing', 'delivered', 'cancelled'] &&
+             data.createdAt == request.time &&
+             data.deliveryAddress is string && data.deliveryAddress.size() < 500;
+    }
+
+    // /menu
+    match /menu/{itemId} {
+      allow read: if true; // Publicly readable
+      allow create: if isAdmin() && isValidFoodItem(incoming()) && 
+                    incoming().keys().hasAll(['name', 'price', 'category', 'image']) &&
+                    incoming().keys().size() >= 4;
+      allow update: if isAdmin() && isValidFoodItem(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // /users
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin(); // Only admins can list all users
+      allow create: if isSignedIn() && isValidProfile(incoming()) && 
+                    incoming().role == 'user' && // User cannot promote themselves
+                    incoming().keys().hasAll(['uid', 'email', 'role']) &&
+                    incoming().keys().size() >= 3;
+      allow update: if isOwner(userId) && isValidProfile(incoming()) &&
+                    incoming().role == existing().role && // Role immutability
+                    incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'phoneNumber', 'address', 'email']);
+      allow delete: if false; // Profiles are permanent or handled by admin manually
+    }
+
+    // /orders
+    match /orders/{orderId} {
+      allow get: if isSignedIn() && (existing().userId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && isValidOrder(incoming()) &&
+                    incoming().status == 'pending' &&
+                    incoming().keys().hasAll(['userId', 'items', 'total', 'status', 'createdAt', 'deliveryAddress']) &&
+                    incoming().keys().size() >= 6;
+      allow update: if isSignedIn() && (
+        // Admin can update any field (status transitions)
+        (isAdmin() && isValidOrder(incoming())) ||
+        // User can only cancel their own pending order
+        (isOwner(existing().userId) && 
+         existing().status == 'pending' &&
+         incoming().status == 'cancelled' &&
+         incoming().diff(existing()).affectedKeys().hasOnly(['status']))
+      );
+      allow delete: if false;
+    }
+
+    // /notifications
+    match /notifications/{notificationId} {
+      allow read: if isAdmin();
+      allow create: if isSignedIn(); // Allow order placement to create notifications
+      allow update: if isAdmin(); // Admin can mark as read
+      allow delete: if isAdmin();
+    }
+
+    // /admins
+    match /admins/{adminId} {
+      allow read: if isAdmin();
+      allow write: if false; // Manually managed in console for security
+    }
+  }
+}
